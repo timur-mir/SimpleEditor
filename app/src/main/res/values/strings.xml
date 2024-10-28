@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Editor</string>
+    <string name="hint_enter_text">Введите текст...</string>
+    <string name="submit">Обновить файл</string>
+    <string name="view_file">Отобразить файл</string>
+    <string name="header_title">Редактор</string>
+</resources>
