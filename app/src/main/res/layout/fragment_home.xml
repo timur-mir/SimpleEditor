@@ -1,40 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#46A89B">
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_default"
-    android:background="#85B487"
+    android:background="#46A89B"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/header_title"
-        android:textSize="45sp"
-        android:textStyle="bold" />
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/resume_search_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="486dp"
+        android:backgroundTint="#524748"
+        app:cardCornerRadius="14dp"
+        app:strokeWidth="0dp">
 
     <EditText
         android:id="@+id/et_input"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:padding="4dp"
+        android:gravity="start"
+        android:textColor="@color/white"
+        android:hint="@string/hint_enter_text" />
+    </com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_enter_text"
-        android:layout_marginTop="@dimen/margin_top_large"
-   />
-
+        android:orientation="horizontal">
     <Button
         android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginTop="@dimen/margin_default"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#524748"
+        android:textColor="#CEEC98"
+        android:layout_weight="4"
+        android:layout_marginTop="@dimen/margin_top_small"
         android:text="@string/submit" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="2"/>
+        <Button
+            android:id="@+id/btn_add_file"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#524748"
+            android:textColor="#CEEC98"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/margin_top_small"
+            android:text="@string/voice_input"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/btn_view_file"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginTop="@dimen/margin_default"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#524748"
+        android:textColor="#CEEC98"
+        android:layout_weight="4"
+        android:layout_marginTop="@dimen/margin_top_small"
         android:text="@string/view_file"
         />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="2"/>
+        <Button
+            android:id="@+id/btn_clear_field"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#524748"
+            android:textColor="#CEEC98"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/margin_top_small"
+            android:text="@string/clear_input_field"
+            />
+
+    </LinearLayout>
 </LinearLayout>
+</RelativeLayout>

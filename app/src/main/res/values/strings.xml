@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Editor</string>
     <string name="hint_enter_text">Введите текст...</string>
-    <string name="submit">Обновить файл</string>
-    <string name="view_file">Отобразить файл</string>
-    <string name="header_title">Редактор</string>
+    <string name="submit">Сохранить</string>
+    <string name="view_file">Посмотреть</string>
+    <string name="delete_file">Удалить записи</string>
+    <string name="voice_input"> Речевой  ввод </string>
+    <string name="header_title">Блокнот по назначению </string>
+    <string name="clear_input_field">Стереть запись</string>
+    <string name="saved_note">Запись сохранена</string>
+
 </resources>

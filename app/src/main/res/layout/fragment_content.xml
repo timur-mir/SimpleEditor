@@ -3,13 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#85B487"
-    android:padding="@dimen/padding_default">
+    android:background="#46A89B">
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/resume_search_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="510dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="#524748"
+        app:cardCornerRadius="14dp"
+        app:strokeWidth="0dp">
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="8"
         android:text="@string/header_title"
-        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:padding="4dp"
+        android:gravity="start"
         android:textStyle="bold" />
+    </com.google.android.material.card.MaterialCardView>
+    <Button
+        android:id="@+id/cl_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#524748"
+        android:gravity="center"
+        android:onClick="Erase"
+        android:layout_marginTop="@dimen/margin_top_small"
+        android:text="@string/delete_file"
+        android:textColor="#CEEC98" />
 </LinearLayout>
