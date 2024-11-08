@@ -1,12 +1,14 @@
 <resources>
     <string name="app_name">Editor</string>
-    <string name="hint_enter_text">Введите текст...</string>
-    <string name="submit">Сохранить</string>
-    <string name="view_file">Посмотреть</string>
-    <string name="delete_file">Удалить записи</string>
-    <string name="voice_input"> Речевой  ввод </string>
-    <string name="header_title">Блокнот по назначению </string>
-    <string name="clear_input_field">Стереть запись</string>
+    <string name="hint_enter_text">Введите текст или воспользуйтесь речевым вводом</string>
+    <string name="submit">Сохранить заметку</string>
+    <string name="view_file">Посмотреть заметки</string>
+    <string name="delete_file">Удалить заметки </string>
+    <string name="voice_input"> Речевой ввод заметки</string>
+    <string name="back_to_main">На главную</string>
+    <string name="header_title">Блокнот для заметок </string>
+    <string name="clear_input_field">Стереть заметку</string>
     <string name="saved_note">Запись сохранена</string>
+    <string name="info_message">"Блокнот по назначению                                     сохраняйте текст перед просмотром файла или выходом из приложения!!!"</string>
 
 </resources>

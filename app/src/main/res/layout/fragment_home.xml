@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46A89B">
+    android:background="@color/grey">
 
 <LinearLayout
     android:id="@+id/header"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#46A89B"
+    android:background="@color/grey"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,7 +17,7 @@
         android:id="@+id/resume_search_card_view"
         android:layout_width="match_parent"
         android:layout_height="486dp"
-        android:backgroundTint="#524748"
+        android:background="@color/brown"
         app:cardCornerRadius="14dp"
         app:strokeWidth="0dp">
 
@@ -28,8 +28,11 @@
         android:layout_weight="4"
         android:padding="4dp"
         android:gravity="start"
+        android:textSize="16sp"
+        android:background="@color/brown"
         android:textColor="@color/white"
-        android:hint="@string/hint_enter_text" />
+        android:hint="@string/hint_enter_text"
+        android:textColorHint="@color/white"/>
     </com.google.android.material.card.MaterialCardView>
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,9 +42,10 @@
         android:id="@+id/btn_submit"
         android:layout_width="148dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#524748"
+        android:backgroundTint="@color/brown"
         android:textColor="#CEEC98"
         android:layout_weight="4"
+        android:padding="0dp"
         android:layout_marginTop="@dimen/margin_top_small"
         android:text="@string/submit" />
         <View
@@ -52,9 +56,10 @@
             android:id="@+id/btn_add_file"
             android:layout_width="148dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#524748"
+            android:backgroundTint="@color/brown"
             android:textColor="#CEEC98"
             android:layout_weight="4"
+            android:padding="0dp"
             android:layout_marginTop="@dimen/margin_top_small"
             android:text="@string/voice_input"
             />
@@ -67,9 +72,10 @@
         android:id="@+id/btn_view_file"
         android:layout_width="148dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#524748"
+        android:backgroundTint="@color/brown"
         android:textColor="#CEEC98"
         android:layout_weight="4"
+        android:padding="0dp"
         android:layout_marginTop="@dimen/margin_top_small"
         android:text="@string/view_file"
         />
@@ -81,9 +87,10 @@
             android:id="@+id/btn_clear_field"
             android:layout_width="148dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#524748"
+            android:backgroundTint="@color/brown"
             android:textColor="#CEEC98"
             android:layout_weight="4"
+            android:padding="0dp"
             android:layout_marginTop="@dimen/margin_top_small"
             android:text="@string/clear_input_field"
             />

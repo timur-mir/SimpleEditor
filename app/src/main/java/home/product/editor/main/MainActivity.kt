@@ -16,15 +16,22 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.internal.view.SupportMenu
 import androidx.fragment.app.Fragment
 import home.product.editor.R
 import home.product.editor.base.BaseView
 import home.product.editor.base.setMovingText
+import org.jetbrains.annotations.NotNull
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.logging.Handler
 
+object Help {
+    var clickFlag = false
+}
 
 class MainActivity : AppCompatActivity(), MainView {
     private lateinit var llContainer: LinearLayout
@@ -37,33 +44,46 @@ class MainActivity : AppCompatActivity(), MainView {
         setupInstances()
         bindsView()
         tvHeader.setSelected(true)
-        tvHeader.setMovingText("Блокнот по назначению")
+        val info = resources.getString(R.string.info_message)
+        tvHeader.setMovingText(info)
         navigateToHome()
     }
 
     override fun navigateToHome() {
+        val count = supportFragmentManager.backStackEntryCount
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.ll_container, homeFragment)
-        transaction.addToBackStack("Home")
-        transaction.commit()
-        supportActionBar?.title = "Главная"
+        if (count == 0) {
+            transaction.add(R.id.ll_container, homeFragment)
+            transaction.addToBackStack("Home")
+            transaction.commit()
+            supportActionBar?.title = "Главная"
+        } else {
+            transaction.replace(R.id.ll_container, homeFragment)
+            transaction.addToBackStack("Home")
+            transaction.commit()
+            supportActionBar?.title = "Главная"
+        }
     }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val count = supportFragmentManager.backStackEntryCount
         if (count == 1) {
-           // super.onBackPressed()
-           finish()
+            // super.onBackPressed()
+            finish()
         } else {
             supportFragmentManager.popBackStack()
+            hideHomeNavigation()
+            supportActionBar?.title = "Главная"
         }
     }
+
     override fun navigateToContent() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.ll_container, contentFragment)
         transaction.addToBackStack("Content")
         transaction.commit()
-        supportActionBar?.title = "Контент"
+        supportActionBar?.title = "Сохранённые записи"
     }
 
     override fun bindsView() {
@@ -76,8 +96,9 @@ class MainActivity : AppCompatActivity(), MainView {
         contentFragment = ContentFragment()
     }
 
-    private fun hideHomeNavigation() {
+    override fun hideHomeNavigation() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.title = "Главная"
     }
 
     private fun showHomeNavigation() {
@@ -87,7 +108,10 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item?.itemId
         if (id == android.R.id.home) {
+            val count = supportFragmentManager.backStackEntryCount
+            supportFragmentManager.popBackStack()
             navigateToHome()
+            supportFragmentManager.popBackStack()
             hideHomeNavigation()
         }
         return super.onOptionsItemSelected(item)
@@ -100,6 +124,7 @@ class MainActivity : AppCompatActivity(), MainView {
         private lateinit var btnSubmit: Button
         private lateinit var btnViewFile: Button
         private lateinit var btnAddFile: Button
+        private lateinit var btnClear: Button
 
         private var outputStream: FileOutputStream? = null
 
@@ -124,21 +149,24 @@ class MainActivity : AppCompatActivity(), MainView {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
+        }
 
+        override fun onPause() {
+            super.onPause()
+            clearInput()
         }
 
         override fun bindsView() {
-
             etInput = layout.findViewById(R.id.et_input)
             btnSubmit = layout.findViewById(R.id.btn_submit)
             btnViewFile = layout.findViewById(R.id.btn_view_file)
             btnAddFile = layout.findViewById(R.id.btn_add_file)
-
+            btnClear = layout.findViewById(R.id.btn_clear_field)
             btnSubmit.setOnClickListener(this)
             btnViewFile.setOnClickListener(this)
             btnAddFile.setOnClickListener(this)
+            btnClear.setOnClickListener(this)
         }
-
         override fun setupInstances() {
             outputStream = activity?.openFileOutput("content_file", Context.MODE_APPEND)
         }
@@ -184,8 +212,7 @@ class MainActivity : AppCompatActivity(), MainView {
                 if (TextUtils.isEmpty(etInput.text)) {
                     showInputError()
                 } else {
-                    writeFile(" "+etInput.text.toString())
-                    showSaveSuccess()
+                    writeFile(" " + etInput.text.toString())
                 }
             } else if (id == R.id.btn_view_file) {
                 val mainActivity = activity as MainActivity
@@ -193,6 +220,8 @@ class MainActivity : AppCompatActivity(), MainView {
                 mainActivity.showHomeNavigation()
             } else if (id == R.id.btn_add_file) {
                 addCharacters()
+            } else if (id == R.id.btn_clear_field) {
+                clearInput()
             }
         }
 
@@ -224,7 +253,9 @@ class MainActivity : AppCompatActivity(), MainView {
         private lateinit var layout: LinearLayout
         private lateinit var tvContent: TextView
         private lateinit var clContent: Button
+        private lateinit var backMain: Button
         private lateinit var inputStream: FileInputStream
+
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -240,8 +271,13 @@ class MainActivity : AppCompatActivity(), MainView {
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
-            clContent.setOnClickListener{
-            Erase()
+            clContent.setOnClickListener {
+                Help.clickFlag = true
+                Erase()
+                backToMainFragment()
+            }
+            backMain.setOnClickListener {
+                backToMainFragment()
             }
         }
 
@@ -257,7 +293,8 @@ class MainActivity : AppCompatActivity(), MainView {
 
         override fun bindsView() {
             tvContent = layout.findViewById(R.id.tv_content)
-            clContent=layout.findViewById(R.id.cl_content)
+            clContent = layout.findViewById(R.id.cl_content)
+            backMain = layout.findViewById(R.id.backt)
         }
 
         override fun setupInstances() {
@@ -269,26 +306,63 @@ class MainActivity : AppCompatActivity(), MainView {
             inputStream.read(bytes)
             return String(bytes)
         }
-        private fun showClearSuccess() {
-            Toast.makeText(requireContext(), "Файл очищен!", Toast.LENGTH_SHORT).show()
+
+        private fun backToMainFragment() {
+     var homeFragment: HomeFragment= HomeFragment()
+            var count = parentFragmentManager.backStackEntryCount
+            while (count > 0) {
+                parentFragmentManager.popBackStack()
+                count -= 1
+            }
+            if (count == 0) {
+                if (Help.clickFlag) {
+                    Thread.sleep(1200)
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.ll_container, homeFragment)
+                    transaction.addToBackStack("Home")
+                    transaction.commit()
+
+                    (activity as MainView).hideHomeNavigation()
+                    Help.clickFlag = false
+                } else {
+                    val transaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.ll_container, homeFragment)
+                    transaction.addToBackStack("Home")
+                    transaction.commit()
+                    (activity as MainView).hideHomeNavigation()
+
+                }
+            }
         }
+
+        private fun showClearSuccess() {
+            Toast.makeText(requireContext(), "Файл очищен!", Toast.LENGTH_LONG).show()
+            backToMainFragment()
+        }
+
+        override fun onPause() {
+            super.onPause()
+        }
+
         private fun showException(exception: Exception) {
             Toast.makeText(activity, "${exception.message}", Toast.LENGTH_LONG).show()
         }
+
         private fun Erase() {
             var fos2: FileOutputStream? = null
             try {
                 val text = ""
                 fos2 = activity?.openFileOutput("content_file", MODE_PRIVATE)
                 fos2!!.write(text.toByteArray())
+                tvContent.text = ""
                 showClearSuccess()
             } catch (ex: IOException) {
-             showException(ex)
+                showException(ex)
             } finally {
                 try {
                     fos2?.close()
                 } catch (ex: IOException) {
-                 showException(ex)
+                    showException(ex)
                 }
             }
         }

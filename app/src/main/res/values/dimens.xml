@@ -3,5 +3,6 @@
     <dimen name="padding_default">16dp</dimen>
     <dimen name="margin_default">16dp</dimen>
     <dimen name="margin_top_small">8dp</dimen>
+    <dimen name="margin_padding">8dp</dimen>
     <dimen name="margin_top_large">64dp</dimen>
 </resources>

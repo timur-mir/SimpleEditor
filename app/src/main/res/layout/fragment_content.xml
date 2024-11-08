@@ -3,36 +3,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#46A89B">
+    android:background="@color/grey">
     <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/resume_search_card_view"
         android:layout_width="match_parent"
         android:layout_height="510dp"
         android:layout_gravity="center_vertical"
-        android:backgroundTint="#524748"
+        android:background="@color/brown"
         app:cardCornerRadius="14dp"
         app:strokeWidth="0dp">
-    <TextView
+    <EditText
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="8"
         android:text="@string/header_title"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:background="@color/brown"
+        android:editable="false"
+        android:cursorVisible="false"
+        android:textSize="16sp"
         android:padding="4dp"
-        android:gravity="start"
-        android:textStyle="bold" />
+        android:gravity="start" />
     </com.google.android.material.card.MaterialCardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/cl_content"
-        android:layout_width="wrap_content"
+        android:layout_width="148dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="#524748"
-        android:gravity="center"
-        android:onClick="Erase"
+        android:backgroundTint="@color/brown"
+        android:layout_weight="4"
         android:layout_marginTop="@dimen/margin_top_small"
         android:text="@string/delete_file"
         android:textColor="#CEEC98" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_weight="2"/>
+        <Button
+            android:id="@+id/backt"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/brown"
+            android:layout_weight="4"
+            android:layout_marginTop="@dimen/margin_top_small"
+            android:text="@string/back_to_main"
+            android:textColor="#CEEC98" />
+</LinearLayout>
 </LinearLayout>
